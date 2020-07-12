@@ -2750,7 +2750,7 @@ encode_classes (Dwg_Data *restrict dwg, Bit_Chain *restrict dat)
           if (klass->dxfname_u)
             bit_write_TU (dat, klass->dxfname_u);
           else
-            bit_write_T (dat, klass->dxfname);
+            bit_write_TV (dat, klass->dxfname);
         }
       else // we always have this one
         bit_write_TV (dat, klass->dxfname);
