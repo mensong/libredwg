@@ -19,8 +19,8 @@ EXEEXT="@EXEEXT@"
 
 i=0
 DATA="sample_2000 example_2000 example_2004 example_2007 example_2010"
-DATA="$DATA example_2013 example_2018 example_r14"
-#TODO="example_r13 r11/ACEB10 r11/entities-3d r10/entities r2.10/entities r2.6/entities r1.4/entities"
+DATA="$DATA example_2013 example_2018 example_r14 example_r13"
+TODO="r11/ACEB10 r11/entities-3d r10/entities r2.10/entities r2.6/entities r1.4/entities"
 SED="@SED@"
 JQ="@JQ@"
 GEOJSONLINT="@GEOJSONLINT@"
@@ -75,7 +75,7 @@ check_roundtrip() {
     fi
 }
 
-for dwg in $DATA; do
+for dwg in $DATA $TODO; do
     json="$(basename "$dwg" .dwg).json"
     log="$json.log"
     dwg="${DATADIR}/$dwg.dwg"
