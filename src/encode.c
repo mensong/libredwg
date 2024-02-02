@@ -3562,15 +3562,14 @@ dwg_encode (Dwg_Data *restrict dwg, Bit_Chain *restrict dat)
          *         1: class section
          *         2: object map
          *         3: optional: ObjFreeSpace
-         *            optional: SecondHeader
-         *         4: and Template
+         *         4: optional: Template
          *         5: optional: AuxHeader (no sentinels, since R13c3)
          */
         LOG_ERROR ("FIXME convert sections from CONTROL objects to tables");
       }
-    if (dwg->header.from_version < R_13b1 && dwg->header.section)
+    if (dwg->header.version < R_13b1 && dwg->header.section)
       {
-        for (int id = (int)SECTION_BLOCK; id <= (int)dwg->header.num_sections;
+        for (int id = (int)SECTION_BLOCK; id < (int)dwg->header.num_sections;
              id++)
           {
             Dwg_Section *tbl = &dwg->header.section[id];

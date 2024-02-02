@@ -3334,14 +3334,13 @@ int
 dwg_sections_init (Dwg_Data *dwg)
 {
   loglevel = dwg->opts & DWG_OPTS_LOGLEVEL;
-  // num_sections: how many sections we need to allocate internally (with
-  // holes)
+  // num_sections: how many sections we need to allocate internally
   if (dwg->header.version < R_13b1)
     {
-      if (!dwg->header.num_sections)
-        dwg->header.num_sections = 5;
       if (!dwg->header.sections)
-        dwg->header.sections = 5;
+        dwg->header.sections = 5; // some r13 have only 3, but we extend them
+      if (!dwg->header.num_sections)
+        dwg->header.num_sections = dwg->header.sections + 2;
       // HEADER.sections is always 3 or 5 even if it needs to be 8 or 10,
       // probably because the additional sections are embedded in HEADER_VARS.
       // 5 tables + header + block. VIEW = 6
@@ -3373,33 +3372,30 @@ dwg_sections_init (Dwg_Data *dwg)
       // and there is one hole 1,2,3,5,6 we need to skip over.
       dwg->header.num_sections += 1;
     }
-  else
+  else if (dwg->header.version < R_2004)
     {
-      /* section 0: header vars
+      /* num_sections:
+       * section 0: header vars
        *         1: class section
        *         2: object map (i.e. handles)
-       *         3: optional ObjFreeSpace (r13c3+, no sentinels)
-       *         7: 2ndheader (not a section, r13+, sentinels)
+       *         3: optional: ObjFreeSpace (r13c3+, no sentinels)
        *         4: optional: Template (MEASUREMENT)
        *         5: optional: AuxHeader (no sentinels, since R_2000b)
        *         6: optional: THUMBNAIL (not a section, but treated as one)
+       *         7: optional: 2ndheader (not a section, r13+, sentinels)
        */
       if (!dwg->header.num_sections ||
           (dwg->header.from_version > R_2000 && dwg->header.version <= R_2000))
         {
-          if (dwg->header.sections)
+          if (!dwg->header.sections)
             {
-              // Plus thumbnail and second header
-              dwg->header.num_sections = dwg->header.sections + 2;
+              dwg->header.sections = dwg->header.version < R_13c3 ? 3
+                                     : dwg->header.version < R_2000b
+                                         ? 5  // no auxheader
+                                         : 6; // with auxheader
             }
-          else
-            {
-              dwg->header.num_sections = dwg->header.version < R_13c3    ? 5
-                                         : dwg->header.version < R_2000b ? 7
-                                                                         : 8;
-              if (dwg->header.num_sections == 5 && dwg->objfreespace.numnums)
-                dwg->header.num_sections = 6;
-            }
+          // Plus thumbnail and second header
+          dwg->header.num_sections = dwg->header.sections + 2;
         }
       if (!dwg->header.sections ||
           (dwg->header.from_version > R_2000 && dwg->header.version <= R_2000))
