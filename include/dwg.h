@@ -264,152 +264,113 @@ typedef Dwg_Bitcode_3BD  BITCODE_3BD_1;
 typedef Dwg_Bitcode_3BD  BITCODE_BE;
 #define BITCODE_3DVECTOR BITCODE_3BD_1
 
+// see also src/common.c: dwg_versions[]
 typedef enum DWG_VERSION_TYPE
 {
-  R_INVALID,
-  // Releases based on https://autodesk.blogs.com/between_the_lines/autocad-release-history.html
-  R_1_1,	/* MC0.0/1  MicroCAD Release 1 */
-  R_1_2,	/* AC1.2/2  AutoCAD Release 2 */
-  R_1_3,	/* AC1.3/?  AutoCAD Release 3 */
-  R_1_4,	/* AC1.40/3 AutoCAD Release 4 */
-  R_2_0b,	/* AC1.50/4 AutoCAD 2.0 beta */
-  R_2_0,	/* AC1.50/4 AutoCAD Release 5 */
-  R_2_10,	/* AC2.10/5 AutoCAD Release 6 */
-  R_2_21,	/* AC2.21/6 AutoCAD Release ? */
-  R_2_22,	/* AC2.22/7 AutoCAD Release ? */
-  R_2_4,	/* AC1001/8 AutoCAD Release ? */
-  R_2_5,	/* AC1002/9 AutoCAD Release 7 */
-  R_2_6,	/* AC1003/10 AutoCAD Release 8 */
-  R_9,		/* AC1004/0xb AutoCAD Release 9 */
-  R_9c1,	/* AC1005/0xc AutoCAD Release 9c1 */
-  R_10,		/* AC1006/0xd AutoCAD Release 10 */
-  R_11b1,	/* AC1007/0xe AutoCAD 11 beta 1 */
-  R_11b2,	/* AC1008/0xf AutoCAD 11 beta 2 */
-  R_11,		/* AC1009/0x10 AutoCAD Release 11/12 (LT R1/R2) */
+  R_INVALID = 0,
+  R_1_1 = 1,	/* MC0.0  MicroCAD Release 1 */
+  R_1_2 = 2,	/* AC1.2  AutoCAD Release 2 */
+  R_1_3 = R_1_2,/* AC1.3  AutoCAD Release 3 */
+  R_1_4 = 3,	/* AC1.40 AutoCAD Release 4 */
+  R_2_0b = 4,	/* AC1.50 AutoCAD 2.0 beta */
+  R_2_0 = 4,	/* AC1.50 AutoCAD Release 2.0 */
+  R_2_10 = 5,	/* AC2.10 AutoCAD Release 2.10 */
+  R_2_21 = 6,	/* AC2.21 AutoCAD Release 2.21 */
+  R_2_22 = 7,	/* AC2.22 AutoCAD Release 2.22 */
+  R_2_4 = 8,	/* AC1001 AutoCAD 2.4 */
+  R_2_5 = 9,	/* AC1002AutoCAD Release 2.5 */
+  R_2_6 = 10,	/* AC1003 AutoCAD Release 2.6 */
+  R_9 = 0xb,	/* AC1004 AutoCAD Release 9 */
+  R_9c1 = 0xc,	/* AC1005 AutoCAD Release 9c1 */
+  R_10 = 0xd,	/* AC1006 AutoCAD Release 10 */
+  R_11b1 = 0xe,	/* AC1007 AutoCAD 11 beta 1 */
+  R_11b2 = 0xf,	/* AC1008 AutoCAD 11 beta 2 */
+  R_11 = 0x10,	/* AC1009 AutoCAD Release 11/12 (LT R1/R2) */
   R_12 = R_11,
-  R_13b1,	/* AC1010/0x11 AutoCAD 13 beta 1 */
-  R_13b2,	/* AC1011/0x12 AutoCAD 13 beta 2 */
-  R_13,		/* AC1012/0x13 AutoCAD Release 13 */
-  R_13c3,	/* AC1013/0x14 AutoCAD Release 13c3 */
-  R_14,		/* AC1014/0x15 AutoCAD Release 14 */
-  R_2000b,	/* AC1500/0x16 AutoCAD 2000 beta */
-  R_2000,	/* AC1015/0x17 AutoCAD Release 2000 */
-  R_2000i,	/* AC1016/0x17 AutoCAD Release 2000i */
-  R_2002,	/* AC1017/0x17 AutoCAD Release 2002 */
-  R_2004a,	/* AC402a/0x18 AutoCAD 2004 alpha a */
-  R_2004b,	/* AC402b/0x18 AutoCAD 2004 alpha b */
-  R_2004c,	/* AC1018/0x18 AutoCAD 2004 beta */
-  R_2004,	/* AC1018/0x19 AutoCAD Release 2004 - 2006 */
+  R_13b1 = R_12,/* AC1010 AutoCAD 13 beta 1 */
+  R_13b2 = 0x12,/* AC1011 AutoCAD 13 beta 2 */
+  R_13 = 0x13,	/* AC1012 AutoCAD Release 13 */
+  R_13c3 = 0x14,/* AC1013/0x14 AutoCAD Release 13c3 */
+  R_14 = 0x15,	/* AC1014/0x15 AutoCAD Release 14 */
+  R_2000b = 0x16,/* AC1500/0x16 AutoCAD 2000 beta */
+  R_2000 = 0x17,/* AC1015/0x17 AutoCAD Release 2000 */
+  R_2000i = R_2000,/* AC1016/0x17 AutoCAD Release 2000i */
+  R_2002 = R_2000,/* AC1017/0x17 AutoCAD Release 2002 */
+  R_2004a = 0x18,/* AC402a/0x18 AutoCAD 2004 alpha a */
+  R_2004b = 0x18,/* AC402b/0x18 AutoCAD 2004 alpha b */
+  R_2004c = 0x18,/* AC1018/0x18 AutoCAD 2004 beta */
+  R_2004 = 0x19,/* AC1018/0x19 AutoCAD Release 2004 - 2006 */
   //R_2005,	/* AC1019/0x19 AutoCAD 2005 */
   //R_2006,	/* AC1020/0x19 AutoCAD 2006 */
-  R_2007a,	/* AC701a/0x19 AutoCAD 2007 alpha 1 */
-  R_2007b,	/* AC1021/0x19 AutoCAD 2007 beta */
-  R_2007,	/* AC1021/0x1b AutoCAD Release 2007 - 2009 */
+  R_2007a = 0x1a,/* AC701a/0x1a AutoCAD 2007 alpha 1 */
+  R_2007b = 0x1a,/* AC1021/0x1a AutoCAD 2007 beta */
+  R_2007 = 0x1b,/* AC1021/0x1b AutoCAD Release 2007 - 2009 */
   //R_2008,	/* AC1022/0x1b AutoCAD 2008 */
   //R_2009,	/* AC1023/0x1b AutoCAD 2009 */
-  R_2010b,	/* AC1024/0x1b AutoCAD 2009 */
-  R_2010,	/* AC1024/0x1c AutoCAD Release 2010 - 2012 */
+  R_2010b = 0x1c,/* AC1024/0x1c AutoCAD 2009 */
+  R_2010 = 0x1c,/* AC1024/0x1c AutoCAD Release 2010 - 2012 */
   //R_2011,	/* AC1025/0x1d AutoCAD 2011 */
   //R_2012,	/* AC1026/0x1e AutoCAD 2012 */
-  R_2013b,	/* AC1027/0x1e AutoCAD 2013 beta */
-  R_2013,	/* AC1027/0x1f AutoCAD Release 2013 - 2017 */
+  R_2013b = 0x1f,/* AC1027/0x1f AutoCAD 2013 beta */
+  R_2013 = 0x1f,/* AC1027/0x1f AutoCAD Release 2013 - 2017 */
   //R_2014,	/* AC1028/0x1f AutoCAD 2014 */
   //R_2015,	/* AC1029/0x1f AutoCAD 2015 */
   //R_2016,	/* AC1030/0x1f AutoCAD 2016 */
   //R_2017,	/* AC1031/0x20 AutoCAD 2017 */
-  R_2018b,	/* AC1032/0x20 AutoCAD 2018 beta */
-  R_2018,	/* AC1032/0x21 AutoCAD Release 2018 - 2021 */
+  R_2018b = 0x20,/* AC1032/0x20 AutoCAD 2018 beta */
+  R_2018 = 0x21,/* AC1032/0x21 AutoCAD Release 2018 - 2021 */
   //R_2019,	/* AC1033/0x22 AutoCAD 2019 */
   //R_2020,	/* AC1034/0x23 AutoCAD 2020 */
   //R_2021,	/* AC1035/0x24 AutoCAD 2021 */
-  R_2022b,	/* AC103-4 AutoCAD 2022 beta? */
+  R_2022b = 0x24,/* AC103-4 AutoCAD 2022 beta? */
+  //R_2022,	/* AC1036/0x24 AutoCAD 2022 */
+  //R_2023,	/* AC1037/0x24 AutoCAD 2023 */
   R_AFTER
 } Dwg_Version_Type;
 #define DWG_VERSIONS (int)(R_AFTER+1)
 
+#if 0
 // Releases based on https://autodesk.blogs.com/between_the_lines/autocad-release-history.html
-typedef enum AUTOCAD_VERSION
-{
-  AUTOCAD_INVALID,
-  MICROCAD_1_0,      /* MicroCAD Release 1.0 */
-  AUTOCAD_1_2,       /* AutoCAD Release 1.2 */
-  AUTOCAD_1_3,       /* AutoCAD Release 1.3 */
-  AUTOCAD_1_4,       /* AutoCAD Release 1.4 */
-  AUTOCAD_2_0,       /* AutoCAD Release 2.0 */
-  AUTOCAD_2_1,       /* AutoCAD Release 2.1 */
-  AUTOCAD_2_5,       /* AutoCAD Release 2.5 */
-  AUTOCAD_2_6,       /* AutoCAD Release 2.6 */
-  AUTOCAD_9,         /* AutoCAD Release 9 */
-  AUTOCAD_10,        /* AutoCAD Release 10 */
-  AUTOCAD_11,        /* AutoCAD Release 11 */
-  AUTOCAD_12,        /* AutoCAD Release 12 */
-  AUTOCAD_13,        /* AutoCAD Release 13 */
-  AUTOCAD_14,        /* AutoCAD Release 14 */
-  AUTOCAD_2000,      /* AutoCAD Release 2000 */
-  AUTOCAD_2000i,     /* AutoCAD Release 2000i */
-  AUTOCAD_2002,      /* AutoCAD Release 2002 */
-  AUTOCAD_2002_SP1   /* AutoCAD Release 2002 Service Pack 1 */
-  AUTOCAD_2004,      /* AutoCAD Release 2004 */
-  AUTOCAD_2005,      /* AutoCAD Release 2005 */
-  AUTOCAD_2006,      /* AutoCAD Release 2006 */
-  AUTOCAD_2006_SP1,  /* AutoCAD Release 2006 Service Pack 1 */
-  AUTOCAD_2007,      /* AutoCAD Release 2007 */
-  AUTOCAD_2008,      /* AutoCAD Release 2008 */
-  AUTOCAD_2009,      /* AutoCAD Release 2009 */
-  AUTOCAD_2010,      /* AutoCAD Release 2010 */
-  AUTOCAD_2011,      /* AutoCAD Release 2011 */
-  AUTOCAD_2012,      /* AutoCAD Release 2012 */
-  AUTOCAD_2013,      /* AutoCAD Release 2013 */
-  AUTOCAD_2014,      /* AutoCAD Release 2014 */
-  AUTOCAD_2015,      /* AutoCAD Release 2015 */
-  AUTOCAD_2016,      /* AutoCAD Release 2016 */
-  AUTOCAD_2017,      /* AutoCAD Release 2017 */
-  AUTOCAD_2018,      /* AutoCAD Release 2018 */
-  AUTOCAD_2019,      /* AutoCAD Release 2019 */
-  AUTOCAD_2020,      /* AutoCAD Release 2020 */
-  AUTOCAD_2021,      /* AutoCAD Release 2021 */
-  AUTOCAD_2022,      /* AutoCAD Release 2022 */
-} Autocad_Version;
-
-// Based on https://autodesk.blogs.com/between_the_lines/autocad-release-history.html
 const struct autocad_versions autocad_versions[] = {
-  /* r,                desc,                        codename,             release, line, maintanance */
-  { MICROCAD_1_0,      "MicroCAD Release 1.0",      "",                   1,       0x1,  0x0  }
-  { AUTOCAD_1_2,       "AutoCAD Release 1.2",       "",                   2,       0x2,  0x0  }
-  { AUTOCAD_1_3,       "AutoCAD Release 1.3",       "",                   3,       0x3,  0x0  }
-  { AUTOCAD_1_4,       "AutoCAD Release 1.4",       "",                   4,       0x4,  0x0  }
-  { AUTOCAD_2_0,       "AutoCAD Release 2.0",       "",                   5,       0x5,  0x0  }
-  { AUTOCAD_2_1,       "AutoCAD Release 2.1",       "",                   6,       0x6,  0x0  }
-  { AUTOCAD_2_5,       "AutoCAD Release 2.5",       "",                   7,       0x7,  0x0  }
-  { AUTOCAD_2_6,       "AutoCAD Release 2.6",       "",                   8,       0x8,  0x0  }
-  { AUTOCAD_9,         "AutoCAD Release 9",         "White Album",        9,       0x9,  0x0  }
-  { AUTOCAD_10,        "AutoCAD Release 10",        "Abbey Road",         10,      0x10, 0x0  }
-  { AUTOCAD_11,        "AutoCAD Release 11",        "Let it Be",          11,      0x11, 0x0  }
-  { AUTOCAD_12,        "AutoCAD Release 12",        "",                   12,      0x12, 0x0  }
-  { AUTOCAD_13,        "AutoCAD Release 13",        "",                   13,      0x13, 0x0  }
-  { AUTOCAD_14,        "AutoCAD Release 14",        "Sedona and Pinetop", 14,      0x14, 0x0  }
-  { AUTOCAD_2000,      "AutoCAD Release 2000",      "Tahoe",              15,      0x17, 0x6  }
+  /* r,                desc,                        codename,         release, dwg_version, maint */
+  { MICROCAD_1_0,      "MicroCAD Release 1.0",      "",                   0,       0x0,  0x0  },
+  { MICROCAD_1_1,      "MicroCAD Release 1.1",      "",                   1,       0x1,  0x0  },
+  { AUTOCAD_1_2,       "AutoCAD Release 1.2",       "",                   2,       0x2,  0x0  },
+  { AUTOCAD_1_3,       "AutoCAD Release 1.3",       "",                   3,       0x3,  0x0  },
+  { AUTOCAD_1_4,       "AutoCAD Release 1.4",       "",                   4,       0x4,  0x0  },
+  { AUTOCAD_2_0,       "AutoCAD Release 2.0",       "",                   5,       0x5,  0x0  },
+  { AUTOCAD_2_1,       "AutoCAD Release 2.1",       "",                   6,       0x6,  0x0  },
+  { AUTOCAD_2_4,       "AutoCAD Release 2.4",       "",                   0,       0x6,  0x0  },
+  { AUTOCAD_2_5,       "AutoCAD Release 2.5",       "",                   7,       0x7,  0x0  },
+  { AUTOCAD_2_6,       "AutoCAD Release 2.6",       "",                   8,       0x8,  0x0  },
+  { AUTOCAD_9,         "AutoCAD Release 9",         "White Album",        9,       0x9,  0x0  },
+  { AUTOCAD_10,        "AutoCAD Release 10",        "Abbey Road",         10,      0x10, 0x0  },
+  { AUTOCAD_11,        "AutoCAD Release 11",        "Let it Be",          11,      0x11, 0x0  },
+  { AUTOCAD_12,        "AutoCAD Release 12",        "",                   12,      0x12, 0x0  },
+  { AUTOCAD_13,        "AutoCAD Release 13",        "",                   13,      0x13, 0x0  },
+  { AUTOCAD_14,        "AutoCAD Release 14",        "Sedona and Pinetop", 14,      0x14, 0x0  },
+  { AUTOCAD_2000,      "AutoCAD Release 2000",      "Tahoe",              15,      0x17, 0x6  },
   // 2000 SP1 same as AUTOCAD_2000.
   // 2000 SP2 same as AUTOCAD_2000.
-  { AUTOCAD_2000i,     "AutoCAD Release 2000i",     "Banff",              16,      0x17, 0xa  }
+  { AUTOCAD_2000i,     "AutoCAD Release 2000i",     "Banff",              16,      0x17, 0xa  },
   // 2000i SP1 same as AUTOCAD_2000i ?
   // 2000i SP2 same as AUTOCAD_2000i ?
-  { AUTOCAD_2002,      "AutoCAD Release 2002",      "Kirkland",           17,      0x17, 0xd  }
-  { AUTOCAD_2002_SP1,  "AutoCAD Release 2002 SP1",  "Kirkland",           17,      0x17, 0xe  }
-  { AUTOCAD_2004,      "AutoCAD Release 2004",      "Reddeer",            18,      0x19, 0x0  }
+  { AUTOCAD_2002,      "AutoCAD Release 2002",      "Kirkland",           17,      0x17, 0xd  },
+  { AUTOCAD_2002_SP1,  "AutoCAD Release 2002 SP1",  "Kirkland",           17,      0x17, 0xe  },
+  { AUTOCAD_2004,      "AutoCAD Release 2004",      "Reddeer",            18,      0x19, 0x0  },
   // { AUTOCAD_?, "", "", 0x19, 0x1 }
-  { AUTOCAD_2004_SP1a, "AutoCAD Release 2004 SP1a", "Reddeer",            18,      0x19, 0x2  }
-  { AUTOCAD_2005,      "AutoCAD Release 2005",      "Neo",                19,      0x19, 0x27 }
+  { AUTOCAD_2004_SP1a, "AutoCAD Release 2004 SP1a", "Reddeer",            18,      0x19, 0x2  },
+  { AUTOCAD_2005,      "AutoCAD Release 2005",      "Neo",                19,      0x19, 0x27 },
   // 2005 SP1?
-  { AUTOCAD_2006,      "AutoCAD Release 2006",      "Rio",                20,      0x19, 0x4c }
-  { AUTOCAD_2006_SP1,  "AutoCAD Release 2006 SP1",  "Rio",                20,      0x19, 0x4d }
-  { AUTOCAD_2007,      "AutoCAD Release 2007",      "Postrio",            21,      0x1b, 0x1  }
+  { AUTOCAD_2006,      "AutoCAD Release 2006",      "Rio",                20,      0x19, 0x4c },
+  { AUTOCAD_2006_SP1,  "AutoCAD Release 2006 SP1",  "Rio",                20,      0x19, 0x4d },
+  { AUTOCAD_2007,      "AutoCAD Release 2007",      "Postrio",            21,      0x1b, 0x1  },
   // 2007 SP1?
-  { AUTOCAD_2008,      "AutoCAD Release 2008",      "Spago",              22,      ?,    ?    }
-  { AUTOCAD_2009,      "AutoCAD Release 2009",      "Raptor",             23,      ?,    ?    }
-  { AUTOCAD_2010,      "AutoCAD Release 2010",      "Gator",              24,      ?,    ?    }
-  { AUTOCAD_2011,      "AutoCAD Release 2011",      "Hammer",             25,      ?,    ?    }
-  { AUTOCAD_2012,      "AutoCAD Release 2012",      "Ironman",            26,      ?,    ?    }
+  { AUTOCAD_2008,      "AutoCAD Release 2008",      "Spago",              22,      ?,    ?    },
+  { AUTOCAD_2009,      "AutoCAD Release 2009",      "Raptor",             23,      ?,    ?    },
+  { AUTOCAD_2010,      "AutoCAD Release 2010",      "Gator",              24,      ?,    ?    },
+  { AUTOCAD_2011,      "AutoCAD Release 2011",      "Hammer",             25,      ?,    ?    },
+  { AUTOCAD_2012,      "AutoCAD Release 2012",      "Ironman",            26,      ?,    ?    },
   // { AUTOCAD_?, "", "", 0x1b, 0x19 }
   // { AUTOCAD_?, "", "", 0x1b, 0x1a }
   // { AUTOCAD_?, "", "", 0x1b, 0x32 }
@@ -420,28 +381,28 @@ const struct autocad_versions autocad_versions[] = {
   // { AUTOCAD_?, "", "", 0x1d, 0x25 }
   // { AUTOCAD_?, "", "", 0x1d, 0x26 }
   // { AUTOCAD_?, "", "", 0x1d, 0x3e }
-  { AUTOCAD_2013,      "AutoCAD Release 2013",      "Jaws",               27,      0x1f, 0x8  }
-  { AUTOCAD_2014,      "AutoCAD Release 2014",      "Keystone",           28,      ?,    ?    }
-  { AUTOCAD_2015,      "AutoCAD Release 2015",      "Longbow",            29,      ?,    ?    }
+  { AUTOCAD_2013,      "AutoCAD Release 2013",      "Jaws",               27,      0x1f, 0x8  },
+  { AUTOCAD_2014,      "AutoCAD Release 2014",      "Keystone",           28,      0x1f, ?    },
+  { AUTOCAD_2015,      "AutoCAD Release 2015",      "Longbow",            29,      0x1f, ?    },
   // { AUTOCAD_?, "", "", 0x1f, 0xa }
   // { AUTOCAD_?, "", "", 0x1f, 0x14 }
   // { AUTOCAD_?, "", "", 0x1f, 0x51 }
   // { AUTOCAD_?, "", "", 0x1f, 0x7d }
-  { AUTOCAD_2016,      "AutoCAD Release 2016",      "Maestro",            30,      ?,    ?    }
-  { AUTOCAD_2017,      "AutoCAD Release 2017",      "Nautilus",           31,      ?,    ?    }
+  { AUTOCAD_2016,      "AutoCAD Release 2016",      "Maestro",            30,      0x1f,  ?   },
+  { AUTOCAD_2017,      "AutoCAD Release 2017",      "Nautilus",           31,      0x20,  ?   },
   // { AUTOCAD_?, "", "", 0x21, 0x0 } ?
   // { AUTOCAD_?, "", "", 0x21, 0x4 }
-  // { AUTOCAD_?, "", "", 0x21, 0x5 }
-  { AUTOCAD_2018,      "AutoCAD Release 2018",      "Omega",              32,      0x21, 0x20 }
+  // { AUTOCAD_2018b, "AutoCAD 2018 beta",          "",                   0,       0x21, 0x5 },
+  { AUTOCAD_2018,      "AutoCAD Release 2018",      "Omega",              32,      0x21, 0x20 },
   // { AUTOCAD_?, "", "", 0x21, 0x47 }
   // { AUTOCAD_?, "", "", 0x21, 0x9b }
   // { AUTOCAD_?, "", "", 0x21, 0xc5 }
   // { AUTOCAD_?, "", "", 0x21, 0xe4 }
-  { AUTOCAD_2019,      "AutoCAD Release 2019",      "Pi",                 33,      ?,    ?    }
-  { AUTOCAD_2020,      "AutoCAD Release 2020",      "Qubit",              34,      ?,    ?    }
-  { AUTOCAD_2021,      "AutoCAD Release 2021",      "Rogue",              35,      ?,    ?    }
-  { AUTOCAD_2022,      "AutoCAD Release 2022",      "Sequoia",            36,      ?,    ?    }
-  { AUTOCAD_2023,      "AutoCAD Release 2023",      "Turing",             37,      0x21, 0xe6 }
+  { AUTOCAD_2019,      "AutoCAD Release 2019",      "Pi",                 33,      0x21, ?    },
+  { AUTOCAD_2020,      "AutoCAD Release 2020",      "Qubit",              34,      0x21, ?    },
+  { AUTOCAD_2021,      "AutoCAD Release 2021",      "Rogue",              35,      0x21, ?    },
+  { AUTOCAD_2022,      "AutoCAD Release 2022",      "Sequoia",            36,      0x21, ?    },
+  { AUTOCAD_2023,      "AutoCAD Release 2023",      "Turing",             37,      0x21, 0xe6 },
 } Autocad_Version;
 
 typedef struct autocad_versions {
@@ -452,6 +413,7 @@ typedef struct autocad_versions {
   uint8_t autocad_line;
   uint8_t autocad_maint;
 } Autocad_Versions;
+#endif
 
 typedef struct dwg_versions {
   Dwg_Version_Type r;

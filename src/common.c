@@ -33,20 +33,20 @@
 // See also
 // http://devel.gvsig.org/sites/org.gvsig.dwg/2.0-SNAPSHOT/gvsig-base-library-pom/org.gvsig.dwg/xref/org/gvsig/dwg/lib/DwgFile.html
 const struct dwg_versions dwg_versions[] = {
-  /* r,          type,    hdr,    desc,         dwg_version */
+  /* r,          type,    hdr,    desc,         dwg_version (=r) */
   { R_INVALID, "invalid", "INVALI", "No DWG", 0 },
-  { R_1_1, "r1.1", "MC0.0", "MicroCAD Release 1.1", 0 },
-  { R_1_2, "r1.2", "AC1.2", "AutoCAD Release 1.2", 0 },
-  { R_1_3, "r1.3", "AC1.3", "AutoCAD Release 1.3", 1 },
-  { R_1_4, "r1.4", "AC1.40", "AutoCAD Release 1.4", 2 },
-  { R_2_0b, "r2.0b", "AC1.50", "AutoCAD 2.0 beta", 3 }, // not seen
+  { R_1_1, "r1.1", "MC0.0", "MicroCAD Release 1.1", 1 },
+  { R_1_2, "r1.2", "AC1.2", "AutoCAD Release 1.2", 2 },
+  { R_1_3, "r1.3", "AC1.3", "AutoCAD Release 1.3", 2 },
+  { R_1_4, "r1.4", "AC1.40", "AutoCAD Release 1.4", 3 },
+  { R_2_0b, "r2.0b", "AC1.50", "AutoCAD 2.0 beta", 4 }, // not seen
   { R_2_0, "r2.0", "AC1.50", "AutoCAD Release 2.0", 4 },
   { R_2_10, "r2.10", "AC2.10", "AutoCAD Release 2.10", 5 },
   { R_2_21, "r2.21", "AC2.21", "AutoCAD Release 2.21", 6 },
   { R_2_22, "r2.22", "AC2.22", "AutoCAD Release 2.22", 7 },
   { R_2_4, "r2.4", "AC1001", "AutoCAD Release 2.4", 8 },
   { R_2_5, "r2.5", "AC1002", "AutoCAD Release 2.5", 9 },
-  { R_2_6, "r2.6", "AC1003", "AutoCAD Release 2.6", 10 },
+  { R_2_6, "r2.6", "AC1003", "AutoCAD Release 2.6", 0xa },
   { R_9, "r9", "AC1004", "AutoCAD Release 9", 0xb },
   { R_9c1, "r9c1", "AC1005", "AutoCAD Release 9c1", 0xc },
   { R_10, "r10", "AC1006", "AutoCAD Release 10", 0xd },
@@ -67,30 +67,32 @@ const struct dwg_versions dwg_versions[] = {
   { R_2004c, "r2004c", "AC1018", "AutoCAD 2004 beta", 0x18 },
   // (includes versions AC1019/0x19 and AC1020/0x1a)
   { R_2004, "r2004", "AC1018", "AutoCAD Release 2004", 0x19 },
-  //{ R_2005, "r2005", "AC1019", "AutoCAD 2005", 0x19 }, // not seen
-  //{ R_2006, "r2006", "AC1020", "AutoCAD 2006", 0x19 }, // not seen
+  //{ R_2005, "r2005", "AC1019", "AutoCAD 2005", 0x19 }, // irrelevant
+  //{ R_2006, "r2006", "AC1020", "AutoCAD 2006", 0x19 }, // irrelevant
   { R_2007a, "r2007a", "AC701a", "AutoCAD 2007 alpha", 0x1a },
   { R_2007b, "r2007b", "AC1021", "AutoCAD 2007 beta", 0x1a },
   { R_2007, "r2007", "AC1021", "AutoCAD Release 2007", 0x1b },
-  //{ R_2008, "r2008", "AC1022", "AutoCAD 2008", 0x1b }, // not seen
-  //{ R_2009, "r2009", "AC1023", "AutoCAD 2009", 0x1b }, // not seen
+  //{ R_2008, "r2008", "AC1022", "AutoCAD 2008", 0x1b }, // irrelevant
+  //{ R_2009, "r2009", "AC1023", "AutoCAD 2009", 0x1b }, // irrelevant
   { R_2010b, "r2010b", "AC1024", "AutoCAD 2010 beta", 0x1c },
   { R_2010, "r2010", "AC1024", "AutoCAD Release 2010", 0x1d },
-  //{ R_2011, "r2011", "AC1025", "AutoCAD 2011", 0x1d }, // not seen
+  //{ R_2011, "r2011", "AC1025", "AutoCAD 2011", 0x1d }, // irrelevant
   //{ R_2012, "r2012", "AC1026", "AutoCAD 2012", 0x1e }, // not seen
-  { R_2013b, "r2013b", "AC1027", "AutoCAD 2013 beta", 0x1e },
+  { R_2013b, "r2013b", "AC1027", "AutoCAD 2013 beta", 0x1f },
   { R_2013, "r2013", "AC1027", "AutoCAD Release 2013", 0x1f },
-  //{ R_2014, "r2014", "AC1028", "AutoCAD 2014", 0x1f }, // not seen
-  //{ R_2015, "r2015", "AC1029", "AutoCAD 2015", 0x1f }, // not seen
-  //{ R_2016, "r2016", "AC1030", "AutoCAD 2016", 0x1f }, // not seen
+  //{ R_2014, "r2014", "AC1028", "AutoCAD 2014", 0x1f }, // irrelevant
+  //{ R_2015, "r2015", "AC1029", "AutoCAD 2015", 0x1f }, // irrelevant
+  //{ R_2016, "r2016", "AC1030", "AutoCAD 2016", 0x1f }, // irrelevant
   //{ R_2017, "r2017", "AC1031", "AutoCAD 2017", 0x20 }, // not seen
-  { R_2018b, "r2018b", "AC1032", "AutoCAD 2018 beta", 0x20 },
+  { R_2018b, "r2018b", "AC1032", "AutoCAD 2018 beta", 0x21 },
   { R_2018, "r2018", "AC1032", "AutoCAD Release 2018", 0x21 },
-  //{ R_2019, "r2019", "AC1033", "AutoCAD Release 2019", 0x22 }, // not seen
-  //{ R_2020, "r2020", "AC1034", "AutoCAD Release 2020", 0x23 }, // not seen
-  //{ R_2021, "r2021", "AC1035", "AutoCAD Release 2021", 0x23 }, // not seen
+  //{ R_2019, "r2019", "AC1033", "AutoCAD Release 2019", 0x21 }, // not seen
+  //{ R_2020, "r2020", "AC1034", "AutoCAD Release 2020", 0x21 }, // not seen
+  //{ R_2021, "r2021", "AC1035", "AutoCAD Release 2021", 0x21 }, // not seen
   { R_2022b, "r2022b", "AC103-4", "AutoCAD 2022 beta", 0x24 },
-  { R_AFTER, "r>2022", NULL, "AutoCAD Release >2022", 0 },
+  //{ R_2022, "r2022", "AC1036", "AutoCAD Release 2022", 0x21 }, // not seen
+  //{ R_2023, "r2022", "AC1037", "AutoCAD Release 2023", 0x21 }, // not seen
+  { R_AFTER, "r>2023", NULL, "AutoCAD Release >2023", 0xff },
 };
 
 const unsigned char *
